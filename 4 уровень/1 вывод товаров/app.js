@@ -1,4 +1,5 @@
 "use strict";
+
 /* 
 Разметка товара:
 
@@ -100,7 +101,7 @@ function showCategory(category) {
     let productMarkup = '';
     for (let i = 0; i < products[category].length; i++) {
         productMarkup += getProductMarkup(products[category][i]);
-    };
+    }
     document.querySelector('.products').insertAdjacentHTML('afterbegin', productMarkup);
 }
 

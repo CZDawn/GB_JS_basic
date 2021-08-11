@@ -1,4 +1,5 @@
 'use strict';
+
 const texts = {
     text1: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     text2: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.',
