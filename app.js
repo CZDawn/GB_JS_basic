@@ -38,11 +38,13 @@ let cartCount = 1;
 featuredImgDarkButtons.forEach(function(button) {
     button.addEventListener('click', function() {
         cartIconCounter.innerHTML = cartCount++;
+    });
+});
 
-        let productName = button.parentNode.parentNode.parentNode.querySelector('.featuredName').textContent;
-        let featuredPrice = button.parentNode.parentNode.parentNode.querySelector('.featuredPrice').textContent;
-        let productPrice = parseInt(featuredPrice.replace(/\s/g, '').slice(1));
-    })
+let cartButton = document.querySelector('.cartIcon');
+cartButton.addEventListener('click', function(event) {
+    event.target.parentNode.parentNode.style.position = 'relative';
+    event.target.parentNode.nextElementSibling.style.display = 'block';
 });
 
 
