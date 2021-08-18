@@ -32,7 +32,7 @@ filterSizeWrap.addEventListener('click', function() {
 
 // Решение задания
 
-// Увеличение счетчика корзины при нажатии кнопки "добавить в корзину" на товаре
+// формирование корзины покупок при добавлении в нее товара
 let featuredImgDarkButtons = document.querySelectorAll('.featuredImgDark button');
 let cartIconCounter = document.querySelector('.cartIconWrap span');
 let cartCount = 0;
