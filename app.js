@@ -32,19 +32,72 @@ filterSizeWrap.addEventListener('click', function() {
 
 // Решение задания
 
+// Увеличение счетчика корзины при нажатии кнопки "добавить в корзину" на товаре
 let featuredImgDarkButtons = document.querySelectorAll('.featuredImgDark button');
 let cartIconCounter = document.querySelector('.cartIconWrap span');
-let cartCount = 1;
+let cartCount = 0;
 featuredImgDarkButtons.forEach(function(button) {
     button.addEventListener('click', function() {
-        cartIconCounter.innerHTML = cartCount++;
+        cartIconCounter.innerHTML = ++cartCount;
+        let featuredName = getFeaturedName(button);
+        let featuredPrice = getFeaturedPrice(button);
+        addProductInCart(featuredName, featuredPrice);
+        document.querySelector('.cartTableSum td').textContent = `
+            Товаров в корзине на сумму: $${countTotalSum()}
+        `;
     });
 });
 
+// Появление таблицы корзины покупок при нажатии на кнопку корзины
 let cartButton = document.querySelector('.cartIcon');
 cartButton.addEventListener('click', function(event) {
     event.target.parentNode.parentNode.style.position = 'relative';
     event.target.parentNode.nextElementSibling.style.display = 'block';
 });
 
+function getFeaturedName(button) {
+    let cartProductEl = button.parentNode.parentNode.nextElementSibling;
+    let featuredName = cartProductEl.querySelector('.featuredName');
+    featuredName = featuredName.textContent.trim();
+    return featuredName;
+};
 
+function getFeaturedPrice(button) {
+    let cartProductEl = button.parentNode.parentNode.nextElementSibling;
+    let featuredPrice = cartProductEl.querySelector('.featuredPrice');
+    featuredPrice = featuredPrice.textContent.trim().slice(1);
+    return featuredPrice;
+};
+
+function addProductInCart(productName, productPrice) {
+    let names = document.querySelectorAll('.productNameInCart');
+    let namesArray = [];
+    names.forEach(function(name) {
+        namesArray.push(name.outerText);
+    });
+    if  (namesArray.includes(productName)) {
+        let productEl = document.getElementById(productName);
+        let pCount = parseInt(productEl.querySelector('.productCount').textContent);
+        productEl.querySelector('.productCount').textContent = ++pCount;
+        productEl.querySelector('.productSum').textContent = `$${(productPrice * pCount).toFixed(2)}`;
+        return;
+    }
+    let cartElMarkup = `
+        <tr id="${productName}">
+            <td class='productNameInCart'>${productName}</td>
+            <td class='productCount'>1</td>
+            <td class='productPrice'>$${productPrice}</td>
+            <td class='productSum'>$${productPrice}</td>
+        </tr>
+    `;
+    document.querySelector('.cartTableSum').insertAdjacentHTML('beforebegin', cartElMarkup);
+};
+
+function countTotalSum() {
+    let productsSums = document.querySelectorAll('.productSum');
+    let sumsArray = [];
+    productsSums.forEach(function(pSum) {
+        sumsArray.push(parseInt(pSum.textContent.slice(1)));
+    });
+    return (sumsArray.reduce(function(a, b) {return a + b})).toFixed(2);
+};
