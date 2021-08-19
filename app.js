@@ -101,3 +101,16 @@ function countTotalSum() {
     });
     return (sumsArray.reduce(function(a, b) {return a + b})).toFixed(2);
 };
+
+let basket = document.getElementById('basket');
+document.addEventListener('click', function(event) {
+    let elem = event.target;
+    if (elem.closest('#basket') == null && basket.style.display == 'block') {
+        if (basket.dataset.visible == 'false') {
+            basket.dataset.visible = 'true';
+        } else {
+            basket.dataset.visible = 'false';
+            basket.style.display = 'none';
+        }
+    }
+});
